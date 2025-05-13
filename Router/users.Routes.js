@@ -11,3 +11,8 @@ usersRouter.route('/register')
 
 usersRouter.route('/login')
 .post(loginUser)
+
+export const chatBot = Router()
+
+chatBot.route('/chatbot')
+.post(chatBot)

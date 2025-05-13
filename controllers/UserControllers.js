@@ -11,7 +11,8 @@ export const createUser = async(req,res)=>{
     console.log(req.body)
     try {
         const user = await client.user.create({
-        data:{firstName,
+        data:{
+            firstName,
             lastName,
             emailAddress,
             userName,
@@ -20,7 +21,10 @@ export const createUser = async(req,res)=>{
             phoneNumber
         }
     })
-    res.json(user)
+    res.status(201).json({
+        message:"User created successfully",
+        data:user
+    })
 
     } catch (error) {
         res.status(500).json({
@@ -43,13 +47,13 @@ export const loginUser = async (req,res)=>{
         })
         if(!user){
             return res.status(404).json({
-                message:"Ivalid credentials"
+                message:"User not found"
             })
         }
         const isPasswordValid = await bcrypt.compare(password,user.password)
         if(!isPasswordValid){
             return res.status(401).json({
-                message:"Invalid credentials"
+                message:"Incorrect password"
             })
         }
         const payLoad ={
@@ -62,16 +66,19 @@ export const loginUser = async (req,res)=>{
             address:user.address,
 
         }
-        const token = jwt.sign(payLoad,process.env.JWT_SECRET,{expiresIn:"1d"})
+        const token = jwt.sign(payLoad,process.env.JWT_SECRET_KEY,{})        
        
-        res.status(200).json({
+        res.status(200).cookie("token",token).json({
             message:"Login successful",
-            token
+            data:user
         })
     } catch (error) {
         res.status(500).json({
+            
             message:"Error logging in",
-            error
+            data: error
         })
     }
 }
+
+
