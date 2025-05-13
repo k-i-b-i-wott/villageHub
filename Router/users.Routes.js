@@ -4,6 +4,7 @@ import {createUser,loginUser} from '../controllers/UserControllers.js'
 import { AllfieldsRequired} from '../middlewares/AllfieldsRequired.js'
 
 import {CheckEmailPassword} from '../middlewares/UniqueIds.js'
+import { chatBot } from '../controllers/ChatBot.Cotroller.js'
 export const usersRouter = Router()
 
 usersRouter.route('/register')
@@ -12,7 +13,7 @@ usersRouter.route('/register')
 usersRouter.route('/login')
 .post(loginUser)
 
-export const chatBot = Router()
+export const chatBotRouter = Router()
 
-chatBot.route('/chatbot')
+chatBotRouter.route('/chatbot')
 .post(chatBot)

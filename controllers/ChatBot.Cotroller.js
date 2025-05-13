@@ -1,30 +1,28 @@
-import {PrismaClient} from '@prisma/client'
 
-const client = new PrismaClient()
+import { GoogleGenAI } from "@google/genai";
+import { config } from 'dotenv';
+
+config();
+
+const geminiAi = new GoogleGenAI({
+  apiKey: process.env.API_KEY  
+})
 
 
-export const chatBot = async (req, res) => {
-  const userMessage= req.body.message;
 
-  if (!userMessage) {
-    return res.status(400).json({ error: 'Message is required' });
-  }
 
-  
-  const botResponse = `You said: "${userMessage}". I'm just a simple bot for now.`;
-
+export const chatBot = async(req, res) => {
+  const userMessage= req.body;
   try {
-    
-    await client.chatMessages.create({
-      data: {
-        userMessage,
-        botResponse,
-      },
-    });
-
-    res.json({ response: botResponse });
+    const response = await geminiAi.models.generateContent
+    res.status(200).json({
+      message: response.choices[0].message.content,
+    });  
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({
+       message: 'Internal Server Error',
+       error,      
+      });
   }
 }

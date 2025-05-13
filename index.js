@@ -1,5 +1,5 @@
 import express from 'express'
-import { chatBot, usersRouter } from './Router/users.Routes.js';
+import {  chatBotRouter, usersRouter } from './Router/users.Routes.js';
 export const app = express()
 import cors from 'cors'
 
@@ -18,7 +18,7 @@ app.use(cors(
 
 
 app.use('/auth',usersRouter)
-app.use('/chat',chatBot)
+app.use('/chat',chatBotRouter)
 
 
 
