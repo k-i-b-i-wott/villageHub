@@ -13,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "@google/genai": "^0.13.0",
+    "@google/generative-ai": "^0.24.1",
     "@prisma/client": "^6.5.0",
     "bcrypt": "^5.1.1",
     "cookie-parser": "^1.4.7",
