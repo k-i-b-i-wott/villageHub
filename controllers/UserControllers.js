@@ -6,7 +6,7 @@ const client = new PrismaClient()
 
 import bcrypt from "bcrypt";
 export const createUser = async(req,res)=>{
-    const {firstName,lastName,emailAddress,userName,password,address,phoneNumber} = req.body
+    const {firstName,lastName,emailAddress,userName,password,address,phoneNumber,profileImage} = req.body
     const hashedPassword = await bcrypt.hash(password,12)
     console.log(req.body)
     try {
@@ -18,7 +18,8 @@ export const createUser = async(req,res)=>{
             userName,
             password:hashedPassword,        
             address,
-            phoneNumber
+            phoneNumber,
+            profileImage,
         }
     })
     res.status(201).json({
@@ -64,7 +65,7 @@ export const loginUser = async (req,res)=>{
             emailAddress:user.emailAddress,
             phoneNumber:user.phoneNumber,
             address:user.address,
-
+            profileImage:user.profileImage,
         }
         const token = jwt.sign(payLoad,process.env.JWT_SECRET_KEY,{})        
        

@@ -22,6 +22,7 @@ model User{
   address String
   phoneNumber String
   password String
+  profileImage String ?
   createdAt DateTime @default(now())
   isDeleted Boolean @default(false)
  

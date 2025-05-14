@@ -7,11 +7,10 @@ const ai = new GoogleGenAI({
 export const chatBot = async (req, res) => {
   const { prompt } = req.body;
     const firstAidInstruction = `
-        You are a helpful assistant who ONLY answers questions related to FIRST AID.
-        If the question is not about first aid, kindly respond:
+        You are a helpful assistant who ONLY answers questions related to FIRST AID, also respond to greetings and tell the user your roles and MEDICAL EMERGENCIES.
+        If the question is not about first aid amd medicine, kindly respond:
         "I'm here to assist with first aid questions only. Please ask me something related to emergency medical care or basic first aid treatment."
-
-        Here is the user's question:`;
+         Here is the user's question:`;
   try {
     const response = await ai.models.generateContent({
       model: "gemini-2.0-flash",
