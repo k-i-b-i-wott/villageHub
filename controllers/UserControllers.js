@@ -1,8 +1,6 @@
 import {PrismaClient} from "@prisma/client"
-
 import jwt from "jsonwebtoken"
 const client = new PrismaClient()
-
 
 import bcrypt from "bcrypt";
 export const createUser = async(req,res)=>{
@@ -79,6 +77,31 @@ export const loginUser = async (req,res)=>{
             message:"Error logging in",
             data: error
         })
+    }
+}
+
+export const UserProfile = async (req,res)=>{
+    const userId = req.user.userId
+
+    try {
+
+        const user = await client.findFirst({
+            where:{
+                userId
+            }
+        })
+        
+        res.status(200).json({
+            message: "User fetched successfully",
+            data: user
+        })
+        
+    } catch (error) {
+        res.json({
+            message :"An error occurred",
+            status :"Fail",
+            data: error
+        })        
     }
 }
 

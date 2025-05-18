@@ -1,10 +1,12 @@
 import express from 'express'
-import {  chatBotRouter, usersRouter } from './Router/users.Routes.js';
+import {  chatBotRouter, usersRouter,profileRouter } from './Router/users.Routes.js';
 export const app = express()
 import cors from 'cors'
+import cookieParser from 'cookie-parser';
 
 
 app.use(express.json())
+app.use(cookieParser())
 app.use(cors(
     {
         origin:[
@@ -19,6 +21,8 @@ app.use(cors(
 
 app.use('/auth',usersRouter)
 app.use('/chat',chatBotRouter)
+app.use('/user',profileRouter)
+
 
 
 

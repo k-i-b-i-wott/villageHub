@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.loginUser = exports.createUser = void 0;
+exports.UserProfile = exports.loginUser = exports.createUser = void 0;
 
 var _client = require("@prisma/client");
 
@@ -155,3 +155,46 @@ var loginUser = function loginUser(req, res) {
 };
 
 exports.loginUser = loginUser;
+
+var UserProfile = function UserProfile(req, res) {
+  var userId, user;
+  return regeneratorRuntime.async(function UserProfile$(_context3) {
+    while (1) {
+      switch (_context3.prev = _context3.next) {
+        case 0:
+          userId = req.user.userId;
+          _context3.prev = 1;
+          _context3.next = 4;
+          return regeneratorRuntime.awrap(client.findFirst({
+            where: {
+              userId: userId
+            }
+          }));
+
+        case 4:
+          user = _context3.sent;
+          res.status(200).json({
+            message: "User fetched successfully",
+            data: user
+          });
+          _context3.next = 11;
+          break;
+
+        case 8:
+          _context3.prev = 8;
+          _context3.t0 = _context3["catch"](1);
+          res.json({
+            message: "An error occurred",
+            status: "Fail",
+            data: _context3.t0
+          });
+
+        case 11:
+        case "end":
+          return _context3.stop();
+      }
+    }
+  }, null, null, [[1, 8]]);
+};
+
+exports.UserProfile = UserProfile;
