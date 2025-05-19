@@ -81,21 +81,17 @@ export const loginUser = async (req,res)=>{
 }
 
 export const UserProfile = async (req,res)=>{
-    const userId = req.user.userId
-
+    const userId = req.user.userId    
     try {
-
-        const user = await client.findFirst({
+        const userInfo = await client.user.findFirst({
             where:{
                 userId
             }
         })
-        
-        res.status(200).json({
-            message: "User fetched successfully",
-            data: user
-        })
-        
+            res.status(200).json({
+            message:"User profile",
+            data:userInfo
+        })        
     } catch (error) {
         res.json({
             message :"An error occurred",

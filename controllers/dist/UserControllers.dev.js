@@ -157,7 +157,7 @@ var loginUser = function loginUser(req, res) {
 exports.loginUser = loginUser;
 
 var UserProfile = function UserProfile(req, res) {
-  var userId, user;
+  var userId, userInfo;
   return regeneratorRuntime.async(function UserProfile$(_context3) {
     while (1) {
       switch (_context3.prev = _context3.next) {
@@ -165,17 +165,17 @@ var UserProfile = function UserProfile(req, res) {
           userId = req.user.userId;
           _context3.prev = 1;
           _context3.next = 4;
-          return regeneratorRuntime.awrap(client.findFirst({
+          return regeneratorRuntime.awrap(client.user.findFirst({
             where: {
               userId: userId
             }
           }));
 
         case 4:
-          user = _context3.sent;
+          userInfo = _context3.sent;
           res.status(200).json({
-            message: "User fetched successfully",
-            data: user
+            message: "User profile",
+            data: userInfo
           });
           _context3.next = 11;
           break;
