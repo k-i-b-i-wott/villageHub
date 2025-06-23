@@ -35,6 +35,7 @@ export const createUser = async(req,res)=>{
 
 export const loginUser = async (req,res)=>{
     const {identifier,password} = req.body
+    
     try {
         const user = await client.user.findFirst({
             where:{
@@ -65,6 +66,7 @@ export const loginUser = async (req,res)=>{
             address:user.address,
             profileImage:user.profileImage,
         }
+        console.log(payLoad)
         const token = jwt.sign(payLoad,process.env.JWT_SECRET_KEY,{})        
        
         res.status(200).cookie("token",token).json({
@@ -80,25 +82,34 @@ export const loginUser = async (req,res)=>{
     }
 }
 
-export const UserProfile = async (req,res)=>{
-    const userId = req.user.userId    
+export const UserProfile = async (req, res) => {
+    const userId = req.user.userId;
     try {
         const userInfo = await client.user.findFirst({
-            where:{
-                userId
+            where: { userId },
+            select: {
+                userId: true,
+                firstName: true,
+                lastName: true,
+                emailAddress: true,
+                userName: true,
+                address: true,
+                phoneNumber: true,
+                profileImage: true,
+                createdAt: true,
+                
             }
-        })
-            res.status(200).json({
-            message:"User profile",
-            data:userInfo
-        })        
+        });
+        res.status(200).json({
+            message: "User profile",
+            data: userInfo
+        });
     } catch (error) {
         res.json({
-            message :"An error occurred",
-            status :"Fail",
+            message: "An error occurred",
+            status: "Fail",
             data: error
-        })        
+        });
     }
 }
-
 

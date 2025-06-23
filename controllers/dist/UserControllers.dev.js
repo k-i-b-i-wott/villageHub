@@ -130,28 +130,29 @@ var loginUser = function loginUser(req, res) {
             address: user.address,
             profileImage: user.profileImage
           };
+          console.log(payLoad);
           token = _jsonwebtoken["default"].sign(payLoad, process.env.JWT_SECRET_KEY, {});
           res.status(200).cookie("token", token).json({
             message: "Login successful",
             data: user
           });
-          _context2.next = 20;
+          _context2.next = 21;
           break;
 
-        case 17:
-          _context2.prev = 17;
+        case 18:
+          _context2.prev = 18;
           _context2.t0 = _context2["catch"](1);
           res.status(500).json({
             message: "Error logging in",
             data: _context2.t0
           });
 
-        case 20:
+        case 21:
         case "end":
           return _context2.stop();
       }
     }
-  }, null, null, [[1, 17]]);
+  }, null, null, [[1, 18]]);
 };
 
 exports.loginUser = loginUser;
@@ -168,6 +169,17 @@ var UserProfile = function UserProfile(req, res) {
           return regeneratorRuntime.awrap(client.user.findFirst({
             where: {
               userId: userId
+            },
+            select: {
+              userId: true,
+              firstName: true,
+              lastName: true,
+              emailAddress: true,
+              userName: true,
+              address: true,
+              phoneNumber: true,
+              profileImage: true,
+              createdAt: true
             }
           }));
 

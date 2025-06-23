@@ -13,18 +13,35 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User{
-  userId String @id @default(uuid())
-  firstName String
-  lastName String
-  emailAddress String @unique
-  userName String @unique
-  address String
-  phoneNumber String
-  password String
-  profileImage String ?
-  createdAt DateTime @default(now())
-  isDeleted Boolean @default(false)
- 
-  @@map("users")  
+model User {
+  userId        String   @id @default(uuid())
+  firstName     String
+  lastName      String
+  emailAddress  String   @unique
+  userName      String   @unique
+  address       String
+  phoneNumber   String
+  password      String
+  profileImage  String?
+  createdAt     DateTime @default(now())
+  isDeleted     Boolean  @default(false)
+  doctorId      String?  // Foreign key to Doctor
+  doctor        Doctor?  @relation(fields: [doctorId], references: [doctorId])
+  @@map("users")
 }
+
+model Doctor {
+  doctorId         String   @id @default(uuid())
+  specialization   String
+  licenseNumber    String   @unique
+  yearsOfExperience Int
+  education        String
+  hospital         String
+  consultationFee  Decimal
+  isAvailable      Boolean  @default(true)
+  createdAt        DateTime @default(now())
+  isDeleted        Boolean  @default(false)
+  patients         User[]   // 1 doctor to many users (patients)
+  @@map("doctors")
+}
+

@@ -9,6 +9,8 @@ var _express = _interopRequireDefault(require("express"));
 
 var _usersRoutes = require("./Router/users.Routes.js");
 
+var _doctorsRoutes = require("./Router/doctors.Routes.js");
+
 var _cors = _interopRequireDefault(require("cors"));
 
 var _cookieParser = _interopRequireDefault(require("cookie-parser"));
@@ -27,3 +29,4 @@ app.use((0, _cors["default"])({
 app.use('/auth', _usersRoutes.usersRouter);
 app.use('/chat', _usersRoutes.chatBotRouter);
 app.use('/user', _usersRoutes.profileRouter);
+app.use('/doctors', _doctorsRoutes.doctorsRouter);

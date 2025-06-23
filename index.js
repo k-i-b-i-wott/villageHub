@@ -1,5 +1,6 @@
 import express from 'express'
 import {  chatBotRouter, usersRouter,profileRouter } from './Router/users.Routes.js';
+import { doctorsRouter } from './Router/doctors.Routes.js';
 export const app = express()
 import cors from 'cors'
 import cookieParser from 'cookie-parser';
@@ -22,6 +23,7 @@ app.use(cors(
 app.use('/auth',usersRouter)
 app.use('/chat',chatBotRouter)
 app.use('/user',profileRouter)
+app.use('/doctors', doctorsRouter)
 
 
 
